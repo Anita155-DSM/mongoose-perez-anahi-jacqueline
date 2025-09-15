@@ -1,0 +1,37 @@
+INVESTIGACIÓN BREVE:
+
+1. populate en colecciones sin referencias
+
+populate solo funciona cuando en tu documento tienes guardada la referencia a otra colección (un id con ref).
+Si tu colección no tiene ningún campo que apunte a otra colección, Mongoose no sabe de dónde traer datos y populate no sirve directamente.
+En esos casos, lo que se hace es consultar primero una colección y luego, con los datos obtenidos, 
+buscar manualmente la información relacionada en la otra colección y combinarla en tu aplicación. Se utiliza el Virtual.
+
+2. Eliminaciones lógicas y en cascada
+
+Eliminación lógica: en lugar de borrar el dato de la base, se marca con un campo que indique que está eliminado (por ejemplo, isDeleted = true). 
+Así el registro queda guardado pero no se muestra en las consultas normales.
+Eliminación en cascada: cuando eliminas un dato principal, también eliminas o actualizas todos los datos relacionados. 
+Por ejemplo, si borras un usuario, también eliminas su perfil y quitas sus referencias en otros documentos para no dejar datos “huérfanos”. 
+Esto se hace desde tu lógica del servidor o con “ganchos” (middlewares) de Mongoose.
+
+3. Endpoint para agregar un vínculo en una relación muchos a muchos
+
+En una relación de muchos a muchos, cada lado guarda una lista con las referencias del otro. 
+Para agregar un vínculo, se hace un endpoint que reciba los identificadores de ambos (por ejemplo, el id del usuario y el id del curso) y en la lógica
+del servidor se añade esa relación en los dos lados. De esa manera, queda guardado que ese usuario está en ese curso y ese curso tiene a ese usuario.
+
+EXPLICACIÓN TRABAJO
+
+PROFILE: En la parte social le puse documento embedido (SOCIAL), redes sociales. Lo pense asi teniendo en cuenta que no es
+necesario tener una coleccion aparte para eso, ya que no se van a hacer consultas sobre las redes sociales,
+ademas de no ser un dato obligatorio. 
+
+En la parte de USER: lo pense como referencia a la coleccion User, ya que cada perfil pertenece a un usuario y es importante
+poder traer los datos del usuario desde el perfil. Por eso es una referencia.
+
+En el controlador de profile, en el getAllProfiles, utilice populate("User") para traer los datos del usuario desde el perfil. Asi también trabaje
+en todos los controladores para traer los datos del usuario cuando se crea, actualiza o trae un perfil.
+
+
+

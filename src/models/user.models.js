@@ -1,4 +1,4 @@
-import {Schema, model, Types} from "mongoose";
+import mongoose, {Schema, model, Types} from "mongoose";
 
 const userSchema = new Schema(
 {
@@ -16,8 +16,12 @@ const userSchema = new Schema(
         type: String,
         unique: true,
         required: true
-    }
-},{
+    },
+    Profile: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Profile' 
+    }} 
+,{
     versionKey: false
 });
 

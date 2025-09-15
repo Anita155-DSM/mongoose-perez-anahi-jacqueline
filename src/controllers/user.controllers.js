@@ -27,7 +27,7 @@ export const createUser = async (req, res) => {
 
 export const getAllUser = async (req, res) => {
   try {
-    const users = await UserModel.find().populate("roles");
+    const users = await UserModel.find().populate("Profile"); //populate sirve para traer los datos de la coleccion relacionada, en este caso el perfil
 
     res.status(200).json({
       ok: true,
@@ -44,7 +44,6 @@ export const getAllUser = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   const { id } = req.params;
-
   try {
     const user = await UserModel.findById(id);
 
@@ -64,11 +63,14 @@ export const getUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { username } = req.body;
-
+  const existingUser = await UserModel.findById(id);
+  if (!existingUser) {  //si el usuario no existe, no se puede actualizar
+    return res.status(404).json({
+      ok: false,
+      msg: "El usuario no existe",
+    });
+  }
   try {
-    // const user = await UserModel.findById(id);
-
-    // const updatedUser2 = await UserModel.updateOne({ _id: id }, { username });
 
     const updatedUser = await UserModel.findByIdAndUpdate(
       id,
@@ -92,14 +94,15 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
-
+  const existingUser = await UserModel.findById(id);
+  if (!existingUser) {  //si el usuario no existe, no se puede eliminar
+    return res.status(404).json({
+      ok: false,
+      msg: "El usuario no existe",
+    });
+  }
   try {
-    // const user = await UserModel.findById(id);
-
-    // const deletedUser2 = await UserModel.deleteOne({ _id: id });
-
     const deletedUser = await UserModel.findByIdAndDelete(id);
-
     res.status(200).json({
       ok: true,
       msg: "Usuario eliminado correctamente",

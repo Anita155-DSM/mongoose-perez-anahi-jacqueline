@@ -3,7 +3,10 @@ import express from 'express';
 import { connectDB } from './src/config/database.js';
 import { routes } from './src/routes/index.routes.js';
 import { UserModel } from './src/models/user.models.js';
-import ProfileModel from './src/models/profile.models.js';
+import { ProfileModel } from './src/models/profile.models.js';
+import { categoryModel } from './src/models/category.models.js';
+import { CourseModel } from './src/models/course.models.js';
+
 
 const app = express();
 const PORT = 3000;

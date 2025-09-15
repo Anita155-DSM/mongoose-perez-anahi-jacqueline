@@ -1,12 +1,7 @@
-import { model, Schema, Types } from "mongoose";
+import mongoose, { model, Schema, Types } from "mongoose";
 
 const profileSchema = new Schema(
 {
-  user: { 
-    type: Types.ObjectId, 
-    ref: "User", 
-    required: true 
-},
   bio: { 
     type: String, 
     maxlength: 500 
@@ -15,7 +10,7 @@ const profileSchema = new Schema(
     type: String, 
     maxlength: 100 
 },
-  social: {
+  social: {  //embebido
     twitter: { 
       type: String, 
       maxlength: 100 
@@ -33,6 +28,4 @@ const profileSchema = new Schema(
   versionKey: false
 });
 
-const ProfileModel = model("Profile", profileSchema);
-
-export default ProfileModel;
+export const ProfileModel = model("Profile", profileSchema);
