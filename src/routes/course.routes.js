@@ -8,3 +8,5 @@ courseRoutes.get("/courses", getAllCourse);
 courseRoutes.get("/courses/:id", getCourseById);
 courseRoutes.put("/courses/:id", updateCourse);
 courseRoutes.delete("/courses/:id", deleteCourse);
+
+export default courseRoutes

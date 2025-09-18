@@ -1,4 +1,5 @@
 import { CourseModel } from "../models/course.models.js";
+import { CategoryModel } from "../models/category.models.js";
 
 export const createCourse = async (req, res) => {
   const { title, description } = req.body; //los valores que me llegan por body
@@ -26,7 +27,7 @@ export const createCourse = async (req, res) => {
 
 export const getAllCourse = async (req, res) => {
   try {
-    const courses = await CourseModel.find().populate("category"); //populate sirve para traer los datos de la coleccion relacionada, en este caso la categoria
+    const courses = await CourseModel.find().populate("Category"); //populate sirve para traer los datos de la coleccion relacionada, en este caso la categoria
 
     res.status(200).json({
       ok: true,

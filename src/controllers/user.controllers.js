@@ -1,4 +1,5 @@
 import { UserModel } from "../models/user.models.js";
+import { ProfileModel } from "../models/profile.models.js";
 
 export const createUser = async (req, res) => {
     const { username, email, password } = req.body; //los valores que me llegan por body
@@ -102,10 +103,26 @@ export const deleteUser = async (req, res) => {
     });
   }
   try {
-    const deletedUser = await UserModel.findByIdAndDelete(id);
+
+    // primermaente busca el usuario 
+    const existingUser = await UserModel.findById(id);
+    if (!existingUser || existingUser.isDeleted) {
+      return res.status(404).json({
+        ok: false,
+        msg: "El usuario no existe o ya está eliminado",
+      });
+    }
+
+    // soft delete del usuario
+    const deletedUser = await UserModel.findByIdAndUpdate(
+      id,
+      { isDeleted: true },
+      { new: true }
+    );
+
     res.status(200).json({
       ok: true,
-      msg: "Usuario eliminado correctamente",
+      msg: "Usuario eliminado lógicamente",
       data: deletedUser,
     });
   } catch (error) {

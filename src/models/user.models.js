@@ -20,7 +20,12 @@ const userSchema = new Schema(
     Profile: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Profile' 
-    }} 
+    },
+    isDeleted: {
+       type: Boolean,
+       default: false
+} 
+}
 ,{
     versionKey: false
 });

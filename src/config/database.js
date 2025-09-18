@@ -7,7 +7,7 @@ export const connectDB = async () => {
     await mongoose.connect("mongodb://localhost:27017/mongoose_bd");
     console.log("base de datos conectada correctamente");
     //para borrar base de datos hacemos lo siguiente demostrado en clase
-    //await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropDatabase();
   } catch (error) {
     console.error("error al conectarse a la base de datos", error);
   }

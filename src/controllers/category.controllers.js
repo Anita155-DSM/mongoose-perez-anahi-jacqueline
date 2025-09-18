@@ -1,4 +1,5 @@
-import { categoryModel } from "../models/category.models.js";
+import { CategoryModel } from "../models/category.models.js";
+import { CourseModel } from "../models/course.models.js";
 
 export const createCategory = async (req, res) => {
   const { name, description } = req.body; //los valores que me llegan por body
@@ -6,12 +7,12 @@ export const createCategory = async (req, res) => {
     return res.status(400).json({ msg: "falta informacion requerida" }); //si los valores no existen entonces retorno un error 400
   };
   //la siguiente validacion verifica si la categoria ya existe en la base de datos
-  const existingCategory = await categoryModel.findOne({ name });
+  const existingCategory = await CategoryModel.findOne({ name });
   if (existingCategory) {
     return res.status(400).json({ msg: "la categoria ya existe" });
   }
   try {
-    const newCategory = await categoryModel.create({ //esta funcion crea una nueva categoria en la base de datos
+    const newCategory = await CategoryModel.create({ //esta funcion crea una nueva categoria en la base de datos
       name,
       description
     });
@@ -26,7 +27,7 @@ export const createCategory = async (req, res) => {
 
 export const getAllCategory = async (req, res) => {
   try {
-    const categories = await categoryModel.find().populate("courses"); //populate sirve para traer los datos de la coleccion relacionada, en este caso los cursos
+    const categories = await CategoryModel.find().populate("Course"); //populate sirve para traer los datos de la coleccion relacionada, en este caso los cursos
 
     res.status(200).json({
       ok: true,
@@ -44,7 +45,7 @@ export const getAllCategory = async (req, res) => {
 export const getCategoryById = async (req, res) => {
   const { id } = req.params;
   try {
-    const category = await categoryModel.findById(id);
+    const category = await CategoryModel.findById(id);
 
     res.status(200).json({
       ok: true,
@@ -62,7 +63,7 @@ export const getCategoryById = async (req, res) => {
 export const updateCategory = async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
-  const existingCategory = await categoryModel.findById(id);
+  const existingCategory = await CategoryModel.findById(id);
   if (!existingCategory) {  //si la categoria no existe, no se puede actualizar
     return res.status(404).json({
       ok: false,
@@ -70,7 +71,7 @@ export const updateCategory = async (req, res) => {
     });
   }
   try {
-    const updatedCategory = await categoryModel.findByIdAndUpdate(
+    const updatedCategory = await CategoryModel.findByIdAndUpdate(
       id,
       { name },
       { new: true }
@@ -92,7 +93,7 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
   const { id } = req.params;
-  const existingCategory = await categoryModel.findById(id);
+  const existingCategory = await CategoryModel.findById(id);
   if (!existingCategory) {  //si la categoria no existe, no se puede eliminar
     return res.status(404).json({
       ok: false,
@@ -100,7 +101,7 @@ export const deleteCategory = async (req, res) => {
     });
   }
   try {
-    const deletedCategory = await categoryModel.findByIdAndDelete(id);
+    const deletedCategory = await CategoryModel.findByIdAndDelete(id);
     res.status(200).json({
       ok: true,
       msg: "Categoria eliminada correctamente",

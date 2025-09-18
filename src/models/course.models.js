@@ -1,6 +1,6 @@
-import mongoose, { model } from 'mongoose';
+import mongoose, { Schema, model, Types} from 'mongoose';
 
-const courseSchema = new mongoose.Schema({
+const courseSchema = new Schema({
   title: {
     type: String,
     required: true

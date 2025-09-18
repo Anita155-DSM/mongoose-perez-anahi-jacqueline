@@ -1,6 +1,6 @@
-import mongoose, { model } from 'mongoose';
+import { Types, model, Schema } from 'mongoose';
 
-const categorySchema = new mongoose.Schema({
+const categorySchema = new Schema({
   name: { 
     type: String, 
     required: true 
@@ -13,4 +13,4 @@ const categorySchema = new mongoose.Schema({
     versionKey: false
 });
 
-export const categoryModel = model("Category", categorySchema);
+export const CategoryModel = model("Category", categorySchema);

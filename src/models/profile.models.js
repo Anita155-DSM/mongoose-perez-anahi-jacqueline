@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, Types } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 const profileSchema = new Schema(
 {
@@ -23,8 +23,13 @@ const profileSchema = new Schema(
       type: String, 
       maxlength: 100 
     },
-  },
-},{
+},
+  isDeleted: {
+  type: Boolean,
+  default: false
+}
+}
+,{
   versionKey: false
 });
 

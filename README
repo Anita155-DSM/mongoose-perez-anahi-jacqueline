@@ -33,5 +33,4 @@ poder traer los datos del usuario desde el perfil. Por eso es una referencia.
 En el controlador de profile, en el getAllProfiles, utilice populate("User") para traer los datos del usuario desde el perfil. Asi también trabaje
 en todos los controladores para traer los datos del usuario cuando se crea, actualiza o trae un perfil.
 
-
-
+En cuanto a categoria
