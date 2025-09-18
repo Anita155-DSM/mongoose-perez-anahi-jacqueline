@@ -2,6 +2,11 @@ import { model, Schema, Types } from "mongoose";
 
 const profileSchema = new Schema(
 {
+  user: {
+    type: Types.ObjectId,  // esto es para que cuando cree un profile en mi controlador se asegure que exista un user
+    required: true,
+    unique: true
+},
   bio: { 
     type: String, 
     maxlength: 500 
