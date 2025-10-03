@@ -19,10 +19,10 @@ const courseSchema = new Schema({
       required: true
     }
   },
-    category: {
+    category: [{
     type: mongoose.Schema.Types.ObjectId,  // id del documento en la otra colección
     ref: "Category"                        // nombre del modelo al que hace referencia
-  }
+  }] //category como array pensado en la relacion muchos a muchos UN CURSO PUEDE PERTENECER A MUCHAS CATEGORIA SY UNA CATEGORIA PUEDE TENER MUCHOS CURSOS
 }, { 
     versionKey: false
 });

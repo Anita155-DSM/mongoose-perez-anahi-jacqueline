@@ -38,4 +38,13 @@ const profileSchema = new Schema(
   versionKey: false
 });
 
+profileSchema.virtual("user", {
+  ref: 'User',
+  localField: '_id',
+  foreignField: 'Profile'
+})
+
+profileSchema.set("toObject", {virtuals: true})
+profileSchema.set("toJSON", {virtuals: true})
+
 export const ProfileModel = model("Profile", profileSchema);

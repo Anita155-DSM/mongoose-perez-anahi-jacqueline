@@ -13,4 +13,13 @@ const categorySchema = new Schema({
     versionKey: false
 });
 
+categorySchema.virtual("course", {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: "category"
+})
+
+categorySchema.set("toObject", {virtuals: true})
+categorySchema.set("toJSON", {virtuals: true})
+
 export const CategoryModel = model("Category", categorySchema);
