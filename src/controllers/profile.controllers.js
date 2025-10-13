@@ -32,7 +32,7 @@ export const createProfile = async (req, res) => {
 
 export const getAllProfiles = async (req, res) => {
   try {
-    const profiles = await ProfileModel.find().populate("user"); //populate sirve para traer los datos de la coleccion relacionada, en este caso el usuario
+    const profiles = await ProfileModel.find().populate("users"); //populate sirve para traer los datos de la coleccion relacionada, en este caso el usuario
 
     res.status(200).json({
       ok: true,

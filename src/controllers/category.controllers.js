@@ -27,7 +27,7 @@ export const createCategory = async (req, res) => {
 
 export const getAllCategory = async (req, res) => {
   try {
-    const categories = await CategoryModel.find().populate("Course"); //populate sirve para traer los datos de la coleccion relacionada, en este caso los cursos
+    const categories = await CategoryModel.find().populate("courses"); //populate sirve para traer los datos de la coleccion relacionada, en este caso los cursos
 
     res.status(200).json({
       ok: true,

@@ -38,4 +38,24 @@ const profileSchema = new Schema(
   versionKey: false
 });
 
+//populate reverso
+
+profileSchema.virtual('users',{
+  ref: "User",
+  localField: "_id",
+  foreignField: "Profile"
+})
+
+
+
+
+/*profileSchema.virtual('users',{ //nombre del virtual
+  ref: "User",//el 
+  localField: "_id",
+  foreignField: "Profile"
+})
+
+profileSchema.set('toJSON', {virtuals: true})
+profileSchema.set('toObject', {virtuals: true})*/
+
 export const ProfileModel = model("Profile", profileSchema);

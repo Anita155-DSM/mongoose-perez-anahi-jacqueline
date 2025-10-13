@@ -1,7 +1,8 @@
 import { UserModel } from "../models/user.models.js";
 import { ProfileModel } from "../models/profile.models.js";
+import { EnrollmentModel } from "../models/enrollment.models.js";
 
-export const createUser = async (req, res) => {
+/*export const createUser = async (req, res) => {
     const { username, email, password } = req.body; //los valores que me llegan por body
     if (!username || !email || !password) {
         return res.status(400).json({ msg: "falta informacion requerida" });//si los valores de username, email o password no existen entonces retorno un error 400
@@ -24,7 +25,7 @@ export const createUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({msg: "error interno del servidor"});
     }
-};
+};*/
 
 export const getAllUser = async (req, res) => {
   try {
@@ -93,36 +94,28 @@ export const updateUser = async (req, res) => {
   }
 };
 
-export const deleteUser = async (req, res) => {
   const { id } = req.params;
   const existingUser = await UserModel.findById(id);
-  if (!existingUser) {  //si el usuario no existe, no se puede eliminar
+  if (!existingUser) {
     return res.status(404).json({
       ok: false,
       msg: "El usuario no existe",
     });
   }
   try {
-
-    // primermaente busca el usuario 
-    const existingUser = await UserModel.findById(id);
-    if (!existingUser || existingUser.isDeleted) {
-      return res.status(404).json({
-        ok: false,
-        msg: "El usuario no existe o ya está eliminado",
-      });
-    }
-
-    // soft delete del usuario
+    // Eliminar perfil relacionado (si existe)
+    await ProfileModel.deleteOne({ user: id });
+    // Eliminar inscripciones relacionadas
+    await EnrollmentModel.deleteMany({ user: id });
+    // Soft delete del usuario
     const deletedUser = await UserModel.findByIdAndUpdate(
       id,
       { isDeleted: true },
       { new: true }
     );
-
     res.status(200).json({
       ok: true,
-      msg: "Usuario eliminado lógicamente",
+      msg: "Usuario, perfil e inscripciones eliminados correctamente",
       data: deletedUser,
     });
   } catch (error) {
@@ -131,5 +124,4 @@ export const deleteUser = async (req, res) => {
       ok: false,
       msg: "Error interno del servidor",
     });
-  }
-};
+  };

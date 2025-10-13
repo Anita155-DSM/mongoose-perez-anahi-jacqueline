@@ -33,4 +33,9 @@ poder traer los datos del usuario desde el perfil. Por eso es una referencia.
 En el controlador de profile, en el getAllProfiles, utilice populate("User") para traer los datos del usuario desde el perfil. Asi también trabaje
 en todos los controladores para traer los datos del usuario cuando se crea, actualiza o trae un perfil.
 
-En cuanto a categoria
+En cuanto a categoria utilicé populate para traer los cursos correspondientes de acuerdo a su categoria(o sea los relacionados) utilicé virtual´s para poder traer los datos relacionados ya que no tengo un ref directo que me permita hacer directamente el populate correspondiente.
+
+Enrollment está pensado teniendo en cuenta una consigna del trabajo que pedia un endpoint que vinculara courses y user y de alguna manera genera un vinculo porque o pensamos desde una persona que se incribe a un curso. 
+
+En cuanto a la organización de las rutas implementamos "index.routes.js" para presenciar un código con mejor orden (esto demostrado en clases).
+

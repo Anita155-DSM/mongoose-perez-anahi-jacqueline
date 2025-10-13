@@ -30,4 +30,19 @@ const userSchema = new Schema(
     versionKey: false
 });
 
+
+
+/*// Virtual para populate reverso - obtener el perfil desde Profile collection
+// usando el campo 'user' que referencia a este User
+userSchema.virtual('profileDetails', {
+  ref: 'Profile',           // Modelo Profile
+  localField: '_id',        // ID del usuario
+  foreignField: 'user',     // Campo en Profile que referencia al User
+  justOne: true             // true porque es relación 1:1
+});
+
+// Incluir virtuals en JSON
+userSchema.set('toJSON', { virtuals: true });
+userSchema.set('toObject', { virtuals: true });*/
+
 export const UserModel = model("User", userSchema);

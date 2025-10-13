@@ -1,5 +1,6 @@
 import { CourseModel } from "../models/course.models.js";
 import { CategoryModel } from "../models/category.models.js";
+import { EnrollmentModel } from "../models/enrollment.models.js";
 
 export const createCourse = async (req, res) => {
   const { title, description } = req.body; //los valores que me llegan por body
@@ -27,7 +28,7 @@ export const createCourse = async (req, res) => {
 
 export const getAllCourse = async (req, res) => {
   try {
-    const courses = await CourseModel.find().populate("Category"); //populate sirve para traer los datos de la coleccion relacionada, en este caso la categoria
+    const courses = await CourseModel.find().populate("category"); //populate sirve para traer los datos de la coleccion relacionada, en este caso la categoria
 
     res.status(200).json({
       ok: true,
@@ -92,20 +93,22 @@ export const updateCourse = async (req, res) => {
   }
 };
 
-export const deleteCourse = async (req, res) => {
   const { id } = req.params;
   const existingCourse = await CourseModel.findById(id);
-  if (!existingCourse) {  //si el curso no existe, no se puede eliminar
+  if (!existingCourse) {
     return res.status(404).json({
       ok: false,
       msg: "El curso no existe",
     });
   }
   try {
+    // Eliminar inscripciones relacionadas a este curso
+    await EnrollmentModel.deleteMany({ course: id });
+    // Eliminar el curso
     const deletedCourse = await CourseModel.findByIdAndDelete(id);
     res.status(200).json({
       ok: true,
-      msg: "Curso eliminado correctamente",
+      msg: "Curso e inscripciones eliminados correctamente",
       data: deletedCourse,
     });
   } catch (error) {
@@ -114,5 +117,4 @@ export const deleteCourse = async (req, res) => {
       ok: false,
       msg: "Error interno del servidor",
     });
-  }
 };

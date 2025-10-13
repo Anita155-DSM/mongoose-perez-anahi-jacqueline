@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { createUser, getAllUser, getUserById, deleteUser, updateUser } from "../controllers/user.controllers.js";
-
+import { getAllUser, getUserById, deleteUser, updateUser } from "../controllers/user.controllers.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { adminMiddleware } from "../middlewares/admin.middleware.js";
 
 const userRoutes = Router();
 
-userRoutes.post("/users", createUser);
-userRoutes.get("/users", getAllUser);
-userRoutes.get("/users/:id", getUserById);
-userRoutes.put("/users/:id", updateUser);
-userRoutes.delete("/users/:id", deleteUser);
+userRoutes.get("/users", authMiddleware, getAllUser);
+userRoutes.get("/users/:id", authMiddleware, getUserById);
+userRoutes.put("/users/:id", authMiddleware, updateUser);
+userRoutes.delete("/users/:id", authMiddleware, adminMiddleware, deleteUser);
 
 export default userRoutes;
